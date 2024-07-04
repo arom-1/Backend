@@ -1,10 +1,14 @@
 package com.example.arom1.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -25,6 +29,15 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<ChatRoomMember> chatroomMemberList = new ArrayList<>();
+
+    @JsonBackReference
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "group_chat_id")
+    private GroupChat groupChat;
 
     public enum Gender {
         MALE, FEMALE
