@@ -1,4 +1,4 @@
-package com.example.team1.domain;
+package com.example.arom1.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
