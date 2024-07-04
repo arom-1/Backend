@@ -1,4 +1,4 @@
-package com.example.team1.domain;
+package com.example.arom1.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -20,6 +20,6 @@ public class Food extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY) //단방향
     @JoinColumn(name = "eatery_category_id", nullable = false)
-    private com.example.team1.domain.EateryCategory eateryCategory;
+    private EateryCategory eateryCategory;
 
 }
