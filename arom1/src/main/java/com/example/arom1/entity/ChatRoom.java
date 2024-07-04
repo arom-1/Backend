@@ -30,20 +30,4 @@ public class ChatRoom extends BaseEntity {
     @OneToMany(mappedBy = "chatroom", cascade = CascadeType.ALL)
     private List<ChatRoomMember> chatroomMemberList = new ArrayList<>();
 
-    @Builder
-    private ChatRoom(String name) {
-        this.chatRoomName = name;
-    }
-
-    public static ChatRoom createChatRoom(String name) {
-        return ChatRoom.builder()
-                .name(name)
-                .build();
-    }
-
-    public static ChatRoom updateChatRoom(String name) {
-        return ChatRoom.builder()
-                .name(name)
-                .build();
-    }
 }
