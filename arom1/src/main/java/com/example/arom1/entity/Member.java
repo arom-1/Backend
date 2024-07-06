@@ -39,6 +39,12 @@ public class Member extends BaseEntity {
     @JoinColumn(name = "group_chat_id")
     private GroupChat groupChat;
 
+    @OneToMany(mappedBy = "member")
+    private List<Member> BoardMembers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Member> BoardReplyMembers = new ArrayList<>();
+
     public enum Gender {
         MALE, FEMALE
     }
