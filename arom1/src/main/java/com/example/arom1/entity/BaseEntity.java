@@ -1,3 +1,4 @@
+
 package com.example.arom1.entity;
 
 import jakarta.persistence.Column;

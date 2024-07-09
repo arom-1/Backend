@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url : ${MYSQL_URL}
-    username: ${MYSQL_NAME}
-    password: ${MYSQL_PASSWORD}
+    url : jdbc:mysql://ec2-13-125-178-232.ap-northeast-2.compute.amazonaws.com:3306/withEat?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: withEat
+    password: withEat123!
   jpa:
     defer-datasource-initialization: true
     properties:

@@ -30,8 +30,12 @@ public class Board extends BaseEntity {
     private List<BoardReply> replies = new ArrayList<>();
 
     @Builder
-    private Board(String title, String content) {
+    private Board(Long id, String title, String content) { //수정
+        this.id = id;
         this.title = title;
         this.content = content;
     }
+
+
+
 }

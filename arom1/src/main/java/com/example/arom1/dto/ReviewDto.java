@@ -12,4 +12,6 @@ public class ReviewDto {
     private int views;
     private int likes;
     private int dislikes;
+
 }
+
