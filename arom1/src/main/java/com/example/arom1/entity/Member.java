@@ -34,15 +34,14 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<ChatRoomMember> chatroomMemberList = new ArrayList<>();
 
-    @JsonBackReference
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "group_chat_id")
-    private GroupChat groupChat;
+    @OneToMany(mappedBy = "member")
+    private List<Board> BoardMembers = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_location", referencedColumnName = "Location")
-    private Location location;
+    @OneToMany(mappedBy = "member")
+    private List<Board> BoardReplyMembers = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member")
+    private List<Image> images = new ArrayList<>();
 
     public enum Gender {
         MALE, FEMALE

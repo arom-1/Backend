@@ -30,8 +30,8 @@ public class ChatRoom extends BaseEntity {
     @OneToMany(mappedBy = "chatroom", cascade = CascadeType.ALL)
     private List<ChatRoomMember> chatroomMemberList = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY) //양방향
-    @JoinColumn(name = "eatery_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "eatery_id")
     private Eatery eatery;
 
 }
