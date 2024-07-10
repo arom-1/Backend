@@ -33,4 +33,5 @@ public class ChatRoom extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "eatery_id")
     private Eatery eatery;
+
 }

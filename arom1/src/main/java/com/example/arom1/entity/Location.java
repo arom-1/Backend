@@ -14,7 +14,7 @@ import org.springframework.data.geo.Point;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "member_location")
+@Table(name = "location")
 public class Location extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,8 @@ public class Location extends BaseEntity {
     @Column(name = "location", columnDefinition = "POINT SRID 4326")
     private Point point;
 
-    @OneToOne(mappedBy = "location")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
     private Member member;
 
     @Builder
