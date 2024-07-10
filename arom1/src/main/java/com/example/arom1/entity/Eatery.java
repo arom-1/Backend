@@ -63,28 +63,4 @@ public class Eatery extends BaseEntity{
 
     @OneToMany(mappedBy = "eatery")
     private List<ChatRoom> chatRooms = new ArrayList<>(); //양방향
-
-
-    @Builder
-    public Eatery(String name, String siteWhlAddr, String rdnWhlAdd, String rdnPostNo, String updateDt, String uptaeNm, String telephone) {
-        this.name = name;
-        this.siteWhlAddr = siteWhlAddr;
-        this.rdnWhlAdd = rdnWhlAdd;
-        this.rdnPostNo = rdnPostNo;
-        this.updateDt = updateDt;
-        this.uptaeNm = uptaeNm;
-        this.telephone = telephone;
-    }
-
-    public static Eatery dtoToEntity(SeoulEateryDto dto){
-        return Eatery.builder()
-                .name(dto.getName())
-                .siteWhlAddr(dto.getSiteWhlAddr())
-                .rdnWhlAdd(dto.getRdnWhlAddr())
-                .rdnPostNo(dto.getRdnPostNo())
-                .updateDt(dto.getUpdateDt())
-                .uptaeNm(dto.getUptaeNm())
-                .telephone(dto.getTelephone())
-                .build();
-    }
 }
