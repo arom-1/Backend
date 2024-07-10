@@ -35,7 +35,8 @@ public class Review extends BaseEntity {
 
 
     @Builder
-    private Review(String content, double rating, int views, int likes, int dislikes) {
+    private Review(Long id, String content, double rating, int views, int likes, int dislikes) {
+        this.id = id;
         this.content = content;
         this.rating = rating;
         this.views = views;
