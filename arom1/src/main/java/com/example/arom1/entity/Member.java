@@ -43,13 +43,10 @@ public class Member extends BaseEntity {
     private List<Board> BoardMembers = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<BoardReply> BoardReplyMembers = new ArrayList<>();
+    private List<Board> BoardReplyMembers = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
     private List<Image> images = new ArrayList<>();
-
-    @OneToOne(mappedBy = "member")
-    private Location location;
 
     public enum Gender {
         MALE, FEMALE

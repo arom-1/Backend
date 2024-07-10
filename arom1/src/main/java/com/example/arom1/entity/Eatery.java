@@ -49,6 +49,4 @@ public class Eatery extends BaseEntity{
     @OneToMany(mappedBy = "eatery")
     private List<ChatRoom> chatRooms = new ArrayList<>(); //양방향
 
-
-
 }
