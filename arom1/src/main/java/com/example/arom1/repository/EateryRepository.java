@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface EateryRepository extends JpaRepository<Eatery, Long> {
     List<Eatery> findByNameContaining(String keyword);
     List<Eatery> findBySiteWhlAddrContaining(String keyword);
+    Optional<Eatery> findByName(String name);
+    List<Eatery> findByUptaeNm(String category);
 }

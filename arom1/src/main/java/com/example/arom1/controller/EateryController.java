@@ -38,7 +38,10 @@ public class EateryController {
     @GetMapping("/eatery")
     public BaseResponse<List<EateryResponse>> eateryHome(@RequestParam String address){
         try{
-            List<EateryResponse> eateryResponseList = eateryService.
+            List<EateryResponse> eateryResponseList = eateryService.searchEateryWithAddress(address);
+            return new BaseResponse<>(eateryResponseList);
+        }catch (BaseException e){
+            return new BaseResponse<>(e.getStatus());
         }
     }
 
@@ -57,6 +60,9 @@ public class EateryController {
     public BaseResponse<List<EateryResponse>> searchEateryByCategory(@RequestParam String category){
         try{
             List<EateryResponse> eateryResponseList = eateryService.searchEateryWithCategory(category);
+            return new BaseResponse<>(eateryResponseList);
+        }catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
         }
     }
 
@@ -64,7 +70,10 @@ public class EateryController {
     @GetMapping("/eatery/search/address")
     public BaseResponse<List<EateryResponse>> searchEateryByAddress(@RequestBody EaterySearchLocation location){
         try{
-            List<EateryResponse> eateryResponseList = eateryService.searchEateryWithAddress(location);
+            List<EateryResponse> eateryResponseList = eateryService.searchEateryWithLocation(location);
+            return new BaseResponse<>(eateryResponseList);
+        }catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
         }
     }
 }
