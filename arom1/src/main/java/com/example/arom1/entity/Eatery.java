@@ -45,6 +45,10 @@ public class Eatery extends BaseEntity{
     @Column(name = "rating", nullable = true)
     private double rating;
 
+    private String x;
+
+    private String y;
+
 //    @Column(name = "information", nullable = false)
 //    private String information;
 //
@@ -65,7 +69,7 @@ public class Eatery extends BaseEntity{
     private List<ChatRoom> chatRooms = new ArrayList<>(); //양방향
 
     @Builder
-    public Eatery(String name, String siteWhlAddr, String rdnWhlAdd, String rdnPostNo, String updateDt, String uptaeNm, String telephone) {
+    public Eatery(String name, String siteWhlAddr, String rdnWhlAdd, String rdnPostNo, String updateDt, String uptaeNm, String telephone, String x, String y) {
         this.name = name;
         this.siteWhlAddr = siteWhlAddr;
         this.rdnWhlAdd = rdnWhlAdd;
@@ -73,6 +77,8 @@ public class Eatery extends BaseEntity{
         this.updateDt = updateDt;
         this.uptaeNm = uptaeNm;
         this.telephone = telephone;
+        this.x = x;
+        this.y = y;
     }
 
     public static Eatery dtoToEntity(SeoulEateryDto dto){
@@ -84,6 +90,8 @@ public class Eatery extends BaseEntity{
                 .updateDt(dto.getUpdateDt())
                 .uptaeNm(dto.getUptaeNm())
                 .telephone(dto.getTelephone())
+                .x(dto.getX())
+                .y(dto.getY())
                 .build();
     }
 }
