@@ -1,6 +1,6 @@
 package com.example.arom1.entity;
 
-import com.example.arom1.dto.SeoulEateryDto;
+import com.example.arom1.dto.request.SeoulEateryDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
