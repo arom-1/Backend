@@ -13,7 +13,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/signup")
-    public String addMember(MemberDto request) {
+    public String signup(MemberDto request) {
         memberService.save(request);
 
         return "redirect:/login";
