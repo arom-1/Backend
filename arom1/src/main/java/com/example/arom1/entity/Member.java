@@ -1,5 +1,6 @@
 package com.example.arom1.entity;
 
+import com.example.arom1.dto.MyPageDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -27,6 +28,11 @@ public class Member extends BaseEntity {
 
     private String introduction;
 
+    private int age;
+
+    private String nickname;
+
+
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
@@ -45,11 +51,20 @@ public class Member extends BaseEntity {
 
 
     @Builder
-    private Member(String email, String password, String name, String introduction, Gender gender) {
+    private Member(String email, String password, String name, String introduction, int age, String nickname, Gender gender) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.introduction = introduction;
+        this.age = age;
+        this.nickname = nickname;
         this.gender = gender;
     }
+
+    public void updateMyPage(MyPageDto dto) {
+        this.introduction = dto.getIntroduction();
+        this.age = dto.getAge();
+        this.nickname = dto.getNickname();
+    }
+
 }
