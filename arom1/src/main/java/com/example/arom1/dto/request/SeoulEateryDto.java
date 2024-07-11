@@ -1,4 +1,4 @@
-package com.example.arom1.dto;
+package com.example.arom1.dto.request;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;

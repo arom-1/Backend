@@ -16,9 +16,9 @@ spring:
 #        default_batch_fetch_size: 100
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/
-    username:
-    password:
+    url: jdbc:mysql://127.0.0.1:3306/withEat
+    username: withEat
+    password: Dlehdgns0126!
   jpa:
     hibernate:
       ddl-auto: update

@@ -18,6 +18,8 @@ public enum BaseResponseStatus {
     NON_EXIST_USER(false, HttpStatus.NO_CONTENT.value(), "존재하지 않는 회원입니다."),
     PASSWORD_ERROR(false, HttpStatus.NO_CONTENT.value(), "비밀번호가 틀렸습니다."),
     HTTP_METHOD_ERROR(false, HttpStatus.FORBIDDEN.value(), "http 메서드가 올바르지 않습니다."),
+    NO_EATERY_BY_KEYWORD(false, HttpStatus.NO_CONTENT.value(), "검색어로 된 음식점이 없습니다."),
+    NO_EATERY_BY_ADDRESS(false, HttpStatus.NO_CONTENT.value(), "주변에 음식점이 없습니다."),
 
     // 5xx : server error
     DATABASE_INSERT_ERROR(false, HttpStatus.INTERNAL_SERVER_ERROR.value(), "데이터베이스 입력에 실패했습니다.");
