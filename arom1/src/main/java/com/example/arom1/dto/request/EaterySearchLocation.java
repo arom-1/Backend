@@ -5,5 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EaterySearchAddress {
+public class EaterySearchLocation {
+    private String x;
+    private String y;
 }

@@ -3,11 +3,10 @@ package com.example.arom1.controller;
 
 import com.example.arom1.common.exception.BaseException;
 import com.example.arom1.common.response.BaseResponse;
-import com.example.arom1.dto.request.EaterySearchKeyword;
+import com.example.arom1.dto.request.EaterySearchLocation;
 import com.example.arom1.dto.request.SeoulEateryDto;
 import com.example.arom1.dto.response.EateryResponse;
 import com.example.arom1.service.EateryService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,20 +33,38 @@ public class EateryController {
         return new BaseResponse<>(list);
     }
 
-    //키워드로 음식점 검색
+    //홈
+    //유저가 설정한 주소 (__동) 기반으로 음식점 반환
     @GetMapping("/eatery")
-    public BaseResponse<List<EateryResponse>> searchEateryByKeyword(@RequestBody EaterySearchKeyword keyword){
+    public BaseResponse<List<EateryResponse>> eateryHome(@RequestParam String address){
+        try{
+            List<EateryResponse> eateryResponseList = eateryService.
+        }
+    }
+
+    //키워드로 음식점 검색
+    @GetMapping("/eatery/search")
+    public BaseResponse<List<EateryResponse>> searchEateryByKeyword(@RequestParam String keyword){
         try {
-            List<EateryResponse> eateryResponseList = eateryService.searchEatery(keyword.getKeyword());
+            List<EateryResponse> eateryResponseList = eateryService.searchEateryWithKeyword(keyword);
             return new BaseResponse<>(eateryResponseList);
         }catch (BaseException e) {
             return new BaseResponse<>(e.getStatus());
         }
     }
 
+    @GetMapping("/eatery/search/category")
+    public BaseResponse<List<EateryResponse>> searchEateryByCategory(@RequestParam String category){
+        try{
+            List<EateryResponse> eateryResponseList = eateryService.searchEateryWithCategory(category);
+        }
+    }
 
-//    @GetMapping("/eatery")
-//    public BaseResponse<List<EateryResponse>> searchEateryByCategory(@RequestParam String category){
-//
-//    }
+    //유저의 현재위치를 기반으로 주변 식당 제공
+    @GetMapping("/eatery/search/address")
+    public BaseResponse<List<EateryResponse>> searchEateryByAddress(@RequestBody EaterySearchLocation location){
+        try{
+            List<EateryResponse> eateryResponseList = eateryService.searchEateryWithAddress(location);
+        }
+    }
 }
