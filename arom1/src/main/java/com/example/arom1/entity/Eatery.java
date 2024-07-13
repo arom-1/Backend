@@ -12,7 +12,7 @@ import java.util.List;
 
 @Getter
 @Entity
-@Table(name = "eatery")
+@Table(name = "eatery", indexes = @Index(name = "idx_eatery", columnList = "name"))
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Eatery extends BaseEntity{
     @Id
