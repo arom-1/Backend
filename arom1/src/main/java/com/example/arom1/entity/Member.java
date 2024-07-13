@@ -41,10 +41,10 @@ public class Member extends BaseEntity {
     private List<ChatRoomMember> chatroomMemberList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<Board> BoardMembers = new ArrayList<>();
+    private List<Meeting> meetingMembers = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<Board> BoardReplyMembers = new ArrayList<>();
+    private List<Meeting> meetingReplyMembers = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
     private List<Image> images = new ArrayList<>();
