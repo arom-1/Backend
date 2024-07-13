@@ -54,4 +54,25 @@ public class Review extends BaseEntity {
                 .build();
     }
 
+    public void setContent(String content){
+        this.content = content;
+    }
+
+    public void setRating(double rating){
+        this.rating = rating;
+    }
+
+    public void setViews(int views){
+        this.views = views;
+    }
+
+    public void setLikes(int likes){
+        this.likes = likes;
+    }
+
+    public void setDislikes(int dislikes){
+        this.dislikes = dislikes;
+    }
+
+
 }

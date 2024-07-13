@@ -56,24 +56,5 @@ public class EateryController {
         }
     }
 
-    @GetMapping("/eatery/search/category")
-    public BaseResponse<List<EateryResponse>> searchEateryByCategory(@RequestParam String category){
-        try{
-            List<EateryResponse> eateryResponseList = eateryService.searchEateryWithCategory(category);
-            return new BaseResponse<>(eateryResponseList);
-        }catch (BaseException e) {
-            return new BaseResponse<>(e.getStatus());
-        }
-    }
 
-    //유저의 현재위치를 기반으로 주변 식당 제공
-    @GetMapping("/eatery/search/address")
-    public BaseResponse<List<EateryResponse>> searchEateryByAddress(@RequestBody EaterySearchLocation location){
-        try{
-            List<EateryResponse> eateryResponseList = eateryService.searchEateryWithLocation(location);
-            return new BaseResponse<>(eateryResponseList);
-        }catch (BaseException e) {
-            return new BaseResponse<>(e.getStatus());
-        }
-    }
 }

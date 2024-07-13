@@ -68,6 +68,9 @@ public class Eatery extends BaseEntity{
     @OneToMany(mappedBy = "eatery")
     private List<ChatRoom> chatRooms = new ArrayList<>(); //양방향
 
+    @OneToMany(mappedBy = "eatery")
+    private List<Meeting> meetings = new ArrayList<>();
+
     @Builder
     public Eatery(String name, String siteWhlAddr, String rdnWhlAdd, String rdnPostNo, String updateDt, String uptaeNm, String telephone, String x, String y) {
         this.name = name;
