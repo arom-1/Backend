@@ -16,8 +16,6 @@ public class EateryResponse {
     private String rdnWhlAdd;
     //도로명 우편주소
     private String rdnPostNo;
-    //데이터 갱신일자
-    private String updateDt;
     //업태구분명
     private String uptaeNm;
 
@@ -26,12 +24,11 @@ public class EateryResponse {
     private double rating;
 
     @Builder
-    private EateryResponse(String name, String siteWhlAddr, String rdnWhlAdd, String rdnPostNo, String updateDt, String uptaeNm, String telephone, double rating) {
+    private EateryResponse(String name, String siteWhlAddr, String rdnWhlAdd, String rdnPostNo, String uptaeNm, String telephone, double rating) {
         this.name = name;
         this.siteWhlAddr = siteWhlAddr;
         this.rdnWhlAdd = rdnWhlAdd;
         this.rdnPostNo = rdnPostNo;
-        this.updateDt = updateDt;
         this.uptaeNm = uptaeNm;
         this.telephone = telephone;
         this.rating = rating;
