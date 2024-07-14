@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "Meeting_reply")
+@Table(name = "meeting_reply")
 public class MeetingReply extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class MeetingReply extends BaseEntity {
     private String writer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Meeting_id")
+    @JoinColumn(name = "meeting_id")
     private Meeting meeting;
 
     @ManyToOne(fetch = FetchType.LAZY)

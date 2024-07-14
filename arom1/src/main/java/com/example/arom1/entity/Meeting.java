@@ -10,11 +10,12 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "Meeting")
+@Table(name = "meeting")
 public class Meeting extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,14 +23,11 @@ public class Meeting extends BaseEntity {
 
     private String title;
 
-    private LocalDateTime meetingTime;
+    private LocalDateTime meeting_time;
 
-    private int meetingMaxMember;
+    private int meeting_max_member;
 
-    private int meetingParticipatedMember;
-
-    private Long memberId;
-    private Long eateryId;
+    private int meeting_participated_member;
 
     @ManyToOne(fetch = FetchType.LAZY) //식당 추가
     @JoinColumn(name = "eatery_id")
@@ -39,54 +37,70 @@ public class Meeting extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "Meeting", cascade = CascadeType.REMOVE)
-    private List<MeetingReply> replies = new ArrayList<>();
+//    @OneToMany(mappedBy = "meeting")
+//    private List<MeetingReply> replies = new ArrayList<>();
+
+    @OneToMany(mappedBy = "meeting", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ChatRoom> chatRooms = new ArrayList<>();
 
     @Builder
-    private Meeting(Long id, String title, LocalDateTime meetingTime, int meetingMaxMember, int meetingParticipatedMember,long memberId, long eateryId) { //수정
+    private Meeting(Long id, String title, LocalDateTime meeting_time, int meeting_max_member, int meeting_participated_member,Member member, Eatery eatery, List<ChatRoom> chatRooms) { //수정
         this.id = id;
         this.title = title;
-        this.meetingTime = meetingTime;
-        this.meetingMaxMember = meetingMaxMember;
-        this.meetingParticipatedMember = meetingParticipatedMember;
-        this.memberId= memberId;
-        this.eateryId=eateryId;
+        this.meeting_time=meeting_time;
+        this.meeting_max_member = meeting_max_member;
+        this.meeting_participated_member = meeting_participated_member;
+        this.member = member;
+        this.eatery = eatery;
+        if(chatRooms != null) {
+            this.chatRooms.addAll(chatRooms);
+        }
+
     }
 
-    public static Meeting newMeeting(MeetingDto meetingDto){
-        return Meeting.builder()
+    public static Meeting newMeeting(MeetingDto meetingDto, Member member, Eatery eatery) {
+        Meeting meeting = Meeting.builder()
                 .title(meetingDto.getTitle())
-                .meetingTime(meetingDto.getMeetingTime())
-                .meetingMaxMember(meetingDto.getMeetingMaxMember())
-                .meetingParticipatedMember(meetingDto.getMeetingParticipatedMember())
-                .memberId(meetingDto.getMemberId())
-                .eateryId(meetingDto.getEateryId())
+                .meeting_time(meetingDto.getMeeting_time())
+                .meeting_max_member(meetingDto.getMeeting_max_member())
+                .meeting_participated_member(meetingDto.getMeeting_participated_member())
+                .member(member)
+                .eatery(eatery)
                 .build();
+
+        ChatRoom chatRoom = ChatRoom.builder()
+                .chatRoomName(meeting.getTitle() + "채팅방")
+                .meeting(meeting)
+                .participants(meeting.getMeeting_participated_member())
+                .totalMembers(meeting.getMeeting_max_member())
+                .build();
+        meeting.getChatRooms().add(chatRoom);
+
+        return meeting;
     }
 
-    public void setTitle(String title){
+    public void setChatRooms(List<ChatRoom> chatRooms) {
+        this.chatRooms = chatRooms;
+    }
+
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setmeetingTime(LocalDateTime meetingTime){
-        this.meetingTime = meetingTime;
+    public void setMeeting_max_member(int meeting_max_member) {
+        this.meeting_max_member = meeting_max_member;
     }
 
-    public void setMeetingMaxMember(int meetingMaxMember){
-        this.meetingMaxMember=meetingMaxMember;
+    public void setMeeting_participated_member(int meeting_participated_member) {
+        this.meeting_participated_member = meeting_participated_member;
     }
 
-    public void setMeetingParticipatedMember(int meetingParticipatedMember){
-        this.meetingParticipatedMember=meetingParticipatedMember;
+    public void setMeeting_time(LocalDateTime meeting_time) {
+        this.meeting_time = meeting_time;
     }
 
-    public void setMemberId (long memberId){
-        this.memberId = memberId;
+    public void setEatery(Eatery eatery) {
+        this.eatery=eatery;
     }
-
-    public void setEateryId (long eateryId) {
-        this.eateryId = eateryId;
-    }
-
 
 }

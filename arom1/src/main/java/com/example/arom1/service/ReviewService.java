@@ -33,38 +33,14 @@ public class ReviewService {
     private final EateryRepository eateryRepository;
     private final MemberRepository memberRepository;
 
-    public List<Review> getApi(StringBuilder apiUrl) throws IOException {
-        URL url = new URL(apiUrl.toString());
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestProperty("Content-type", "application/json");
-
-        int responseCode = conn.getResponseCode();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(responseCode >= 200 && responseCode <= 300 ? conn.getInputStream() : conn.getErrorStream()));
-
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            sb.append(line);
-        }
-
-        Gson gson = new Gson();
-        List<Review> reviews = gson.fromJson(sb.toString(), new TypeToken<List<Review>>(){}.getType());
-
-        return reviews;
-    }
-
-    public List<Review> findByEateryId(Long eateryId) {
-        return reviewRepository.findByEateryId(eateryId);
-    }
-
 
     //리뷰 수정 기능
-    public Review updateReview(Long reviewId, Long memberId, ReviewDto reviewDto) {
+    public ReviewResponse updateReview(Long reviewId, ReviewDto reviewDto) {
         Review existingReview = reviewRepository.findById(reviewId)
                 .orElseThrow(()-> new BaseException(BaseResponseStatus.NO_REVIEW_EXIST));
 
         //권한 확인
-        if (!existingReview.getMember().getId().equals(memberId)) {
+        if (!existingReview.getMember().getId().equals(reviewDto.getMember_id())) {
             throw new BaseException(BaseResponseStatus.INVALID_MEMBER);
         }
 
@@ -74,7 +50,9 @@ public class ReviewService {
         existingReview.setLikes(reviewDto.getLikes());
         existingReview.setDislikes(reviewDto.getDislikes());
 
-        return reviewRepository.save(existingReview);
+        reviewRepository.save(existingReview);
+        ReviewResponse reviewResponse = ReviewResponse.entityToDto(existingReview);
+        return reviewResponse;
     }
     
     //리뷰 삭제
@@ -86,32 +64,32 @@ public class ReviewService {
         if (!existingReview.getMember().getId().equals(memberId)) {
             throw new BaseException(BaseResponseStatus.INVALID_MEMBER);
         }
-        reviewRepository.delete(existingReview);
+
+       reviewRepository.delete(existingReview);
     }
 
     //리뷰 조회
-    public List<ReviewResponse> findAllReviews(){
+    public List<ReviewResponse> findAllReviews(Long eateryId){
         // 모든 리뷰를 조회하여 ReviewResponse DTO로 변환
-        List<Review> reviews = reviewRepository.findAll();
+        List<Review> reviews = reviewRepository.findByEateryId(eateryId);
         return reviews.stream()
                 .map(ReviewResponse::entityToDto)
                 .collect(Collectors.toList());
     }
 
     //리뷰 작성
-    public List<ReviewResponse> saveReview(Long eateryId, Long memberId, ReviewDto reviewdto) {
-        Eatery eatery = eateryRepository.findById(eateryId)
+    public ReviewResponse saveReview(ReviewDto reviewdto) {
+        Eatery eatery = eateryRepository.findById(reviewdto.getEatery_id())
                 .orElseThrow(()->new BaseException(BaseResponseStatus.INVALID_EATERY));
 
-        Member member = memberRepository.findById(memberId)
+        Member member = memberRepository.findById(reviewdto.getMember_id())
                 .orElseThrow(()->new BaseException(BaseResponseStatus.INVALID_MEMBER));
 
-        Review review = Review.newReview(reviewdto);
+        Review review = Review.newReview(reviewdto, member, eatery);
         reviewRepository.save(review);
 
-        List<Review> reviews = reviewRepository.findByEateryId(eateryId);
-        return reviews.stream()
-                .map(ReviewResponse::entityToDto)
-                .collect(Collectors.toList());
+        ReviewResponse reviewResponse = ReviewResponse.entityToDto(review);
+
+        return reviewResponse;
     }
 }

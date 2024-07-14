@@ -4,6 +4,7 @@ package com.example.arom1.entity;
 import com.example.arom1.dto.ReviewDto;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.dialect.function.EveryAnyEmulation;
 
 @Getter
 @Entity
@@ -35,22 +36,26 @@ public class Review extends BaseEntity {
 
 
     @Builder
-    private Review(Long id, String content, double rating, int views, int likes, int dislikes) {
+    private Review(Long id, String content, double rating, int views, int likes, int dislikes, Member member, Eatery eatery) {
         this.id = id;
         this.content = content;
         this.rating = rating;
         this.views = views;
         this.likes = likes;
         this.dislikes = dislikes;
+        this.eatery = eatery;
+        this.member = member;
     }
 
-    public static Review newReview(ReviewDto dto) {
+    public static Review newReview(ReviewDto dto, Member member, Eatery eatery) {
         return Review.builder()
                 .content(dto.getContent())
                 .rating(dto.getRating())
                 .views(dto.getViews())
                 .likes(dto.getLikes())
                 .dislikes(dto.getDislikes())
+                .member(member)
+                .eatery(eatery)
                 .build();
     }
 
@@ -73,6 +78,7 @@ public class Review extends BaseEntity {
     public void setDislikes(int dislikes){
         this.dislikes = dislikes;
     }
+
 
 
 }

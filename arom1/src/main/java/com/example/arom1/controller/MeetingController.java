@@ -3,6 +3,7 @@ package com.example.arom1.controller;
 
 import com.example.arom1.common.exception.BaseException;
 import com.example.arom1.common.response.BaseResponse;
+import com.example.arom1.common.response.BaseResponseStatus;
 import com.example.arom1.dto.MeetingDto;
 import com.example.arom1.dto.ReviewDto;
 import com.example.arom1.dto.response.MeetingResponse;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/eatery/{index}/meetings")
+@RequestMapping("/eatery")
 public class MeetingController {
 
     @Autowired
@@ -29,41 +30,45 @@ public class MeetingController {
     @Autowired
     private MeetingRepository meetingRepository;
 
-    @GetMapping
-    public BaseResponse<?> getMeetings(@PathVariable int index) throws IOException {
-        int start = 1000 * index + 1;
-        int end = 1000 * (index + 1);
-        StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088"); /*URL*/
-        urlBuilder.append("/" +  URLEncoder.encode("4f655a6e4e696d68373174524a6944","UTF-8") ); /*인증키 (sample사용시에는 호출시 제한됩니다.)*/
-        urlBuilder.append("/" +  URLEncoder.encode("json","UTF-8") ); /*요청파일타입 (xml,xmlf,xls,json) */
-        urlBuilder.append("/" + URLEncoder.encode("LOCALDATA_072404","UTF-8")); /*서비스명 (대소문자 구분 필수입니다.)*/
-        urlBuilder.append("/" + URLEncoder.encode(Integer.toString(start),"UTF-8")); /*요청시작위치 (sample인증키 사용시 5이내 숫자)*/
-        urlBuilder.append("/" + URLEncoder.encode(Integer.toString(end),"UTF-8")); /*요청종료위치(sample인증키 사용시 5이상 숫자 선택 안 됨)*/
-        List<Meeting> list = meetingService.getApi(urlBuilder);
-
-        List<MeetingResponse> meetingResponseList = list.stream() //리뷰 목록 조회
-                .map(MeetingResponse::entityToDto)
-                .collect(Collectors.toList());
-
-        return new BaseResponse<>(meetingResponseList);
+    //음식점 선택 후 식사 메이트 구하는 글 보기
+    @GetMapping("/{eateryId}/meetings")
+    public BaseResponse<?> getMeetingsByEateryId(@PathVariable long eateryId) throws IOException {
+        try{
+            List<MeetingResponse> meetingResponseList = meetingService.getMeetingByEateryId(eateryId);
+            return new BaseResponse<>(meetingResponseList);
+        }
+        catch(BaseException e){
+            return new BaseResponse<>(e);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return new BaseResponse<>(BaseResponseStatus.DATABASE_INSERT_ERROR);
+        }
     }
 
-    //작성
-    @PostMapping
-    public BaseResponse<?> saveMeeting(@RequestParam Long eateryId, @RequestParam Long memberId, @RequestBody MeetingDto meetingDto){
+    //음식점 식사 메이트 구하는 글 작성
+    @PostMapping("/{eateryId}/meetings")
+    public BaseResponse<?> saveMeeting(@PathVariable long eateryId, @RequestBody MeetingDto meetingDto){
         try{
-            List<MeetingResponse> meetingResponseList = meetingService.saveMeeting(eateryId, memberId, meetingDto);
-            return new BaseResponse<>(meetingResponseList);
-        }catch (BaseException e){
+            // 저장된 회의 정보를 반환
+            MeetingResponse meetingResponse = meetingService.saveMeeting(meetingDto);
+            return new BaseResponse<>(meetingResponse);
+        }catch (BaseException e) {
+            // 로그에 스택 트레이스 출력
+            e.printStackTrace();
             return new BaseResponse<>(e.getStatus());
+        } catch (Exception e) {
+            // 일반 예외 처리
+            e.printStackTrace();
+            return new BaseResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
     }
 
     //수정
-    @PutMapping("{meetingId}")
-    public BaseResponse<?> updateMeeting(@PathVariable Long meetingId, @RequestParam Long memberId, @RequestBody MeetingDto meetingDto ){
+    @PutMapping("/{eateryId}/meetings/{meetingId}")
+    public BaseResponse<?> updateMeeting(@PathVariable Long eateryId, @PathVariable Long meetingId, @RequestBody MeetingDto meetingDto ){
         try{
-            Meeting updatedMeeting = meetingService.updateMeeting(meetingId, memberId, meetingDto);
+            MeetingResponse updatedMeeting = meetingService.updateMeeting(eateryId, meetingId, meetingDto);
             return new BaseResponse<>(updatedMeeting);
         }
         catch (BaseException e){
@@ -72,13 +77,26 @@ public class MeetingController {
     }
 
     //삭제
-    @DeleteMapping("{meetingId}")
-    public BaseResponse<?> deleteMeeting(@PathVariable Long meetingId,@RequestParam Long memberId){
+    @DeleteMapping("/{eateryId}/meetings/{meetingId}")
+    public BaseResponse<?> deleteMeeting(@PathVariable Long eateryId,@PathVariable Long meetingId, @RequestParam Long memberId){
         try{
             meetingService.deleteMeeting(meetingId, memberId);
-            return new BaseResponse<>(HttpStatus.NO_CONTENT.value());
+            return new BaseResponse<>(BaseResponseStatus.SUCCESS);
         }
         catch (BaseException e){
+            return new BaseResponse<>(e.getStatus());
+        }
+    }
+
+    //상세보기 기능
+    @GetMapping("/{eateryId}/meetings/{meetingId}")
+    public BaseResponse<?> getMeetingById(@PathVariable Long eateryId, @PathVariable Long meetingId){
+        try{
+           MeetingResponse meetingResponse = meetingService.getMeetingById(meetingId);
+           return new BaseResponse<>(meetingResponse);
+
+        }
+        catch(BaseException e){
             return new BaseResponse<>(e.getStatus());
         }
     }

@@ -14,33 +14,24 @@ import java.time.LocalDateTime;
 public class MeetingDto {
     private long id;
     private String title;
-    private LocalDateTime meetingTime;
-    private int meetingMaxMember;
-    private int meetingParticipatedMember;
-    private long memberId;
-    private long eateryId;
+    private LocalDateTime meeting_time;
+    private int meeting_max_member;
+    private int meeting_participated_member;
+    private long member_id;
+    private long eatery_id;
 
 
     @Builder
-    public MeetingDto(String title, LocalDateTime meetingTime, int meetingMaxMember, int meetingParticipatedMember, long memberId, long eateryId){
+    public MeetingDto(long id, String title, LocalDateTime meeting_time, int meeting_max_member, int meeting_participated_member,long member_id, long eatery_id){
+        this.id=id;
         this.title=title;
-        this.meetingTime=meetingTime;
-        this.meetingMaxMember=meetingMaxMember;
-        this.meetingParticipatedMember=meetingParticipatedMember;
-        this.memberId=memberId;
-        this.eateryId=eateryId;
+        this.meeting_time=meeting_time;
+        this.meeting_max_member=meeting_max_member;
+        this.meeting_participated_member=meeting_participated_member;
+        this.member_id=member_id;
+        this.eatery_id=eatery_id;
     }
 
-    public static MeetingDto CreatemeetingDto(Meeting meeting) {
-        return MeetingDto.builder()
-                .title(meeting.getTitle())
-                .meetingTime(meeting.getMeetingTime())
-                .meetingMaxMember(meeting.getMeetingMaxMember())
-                .meetingParticipatedMember(meeting.getMeetingParticipatedMember())
-                .memberId(meeting.getMemberId())
-                .eateryId(meeting.getEateryId())
-                .build();
-    }
 
 
 }

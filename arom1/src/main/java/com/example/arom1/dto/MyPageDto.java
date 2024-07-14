@@ -2,12 +2,14 @@ package com.example.arom1.dto;
 
 import com.example.arom1.entity.Image;
 import com.example.arom1.entity.Member;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Getter;
 
 
 @Getter
 public class MyPageDto {
+    @NotEmpty
     private String nickname;
     private int age;
     private String introduction;

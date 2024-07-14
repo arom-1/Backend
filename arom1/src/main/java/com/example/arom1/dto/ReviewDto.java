@@ -16,28 +16,19 @@ public class ReviewDto {
     private int views;
     private int likes;
     private int dislikes;
-    private Member member;
-    private Eatery eatery;
+    private long member_id;
+    private long eatery_id;
 
     @Builder
-    private ReviewDto(Long id,String content, double rating, int views, int likes, int dislikes) {
+    private ReviewDto(Long id,String content, double rating, int views, int likes, int dislikes, long member_id, long eatery_id) {
         this.id=id;
         this.content=content;
         this.rating=rating;
         this.views=views;
         this.likes=likes;
         this.dislikes=dislikes;
-    }
-
-    public static ReviewDto reviewDto(Review review) {
-        return ReviewDto.builder()
-                .id(review.getId())
-                .content(review.getContent())
-                .rating(review.getRating())
-                .views(review.getViews())
-                .likes(review.getViews())
-                .dislikes(review.getViews())
-                .build();
+        this.member_id=member_id;
+        this.eatery_id=eatery_id;
     }
 
 }
