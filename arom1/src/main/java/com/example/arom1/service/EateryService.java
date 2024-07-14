@@ -1,6 +1,10 @@
 package com.example.arom1.service;
 
-import com.example.arom1.dto.SeoulEateryDto;
+import com.example.arom1.common.exception.BaseException;
+import com.example.arom1.common.response.BaseResponseStatus;
+import com.example.arom1.dto.request.EaterySearchLocation;
+import com.example.arom1.dto.request.SeoulEateryDto;
+import com.example.arom1.dto.response.EateryResponse;
 import com.example.arom1.entity.Eatery;
 import com.example.arom1.repository.EateryRepository;
 import com.google.gson.Gson;
@@ -57,4 +61,29 @@ public class EateryService {
         conn.disconnect();
         return seoulEateryDtoList;
     }
+
+    public List<EateryResponse> searchEateryWithAddress(String address){
+        List<EateryResponse> seoulEateryByKeyword = eateryRepository.findBySiteWhlAddrContaining(address).stream().map(EateryResponse::entityToDto).toList();
+        if(seoulEateryByKeyword.isEmpty())
+            throw new BaseException(BaseResponseStatus.NO_EATERY_BY_KEYWORD);
+        return seoulEateryByKeyword;
+    }
+
+    public List<EateryResponse> searchEateryWithKeyword(String keyword){
+        List<EateryResponse> seoulEateryByKeyword = eateryRepository.findByNameContaining(keyword).stream().map(EateryResponse::entityToDto).toList();
+        if(seoulEateryByKeyword.isEmpty())
+            throw new BaseException(BaseResponseStatus.NO_EATERY_BY_KEYWORD);
+        return seoulEateryByKeyword;
+    }
+
+    public void searchEateryWithLocation(EaterySearchLocation location){
+        String x = location.getX();
+        String y = location.getY();
+
+    }
+
+    public void searchEateryWithCategory(String category){
+
+    }
+
 }
