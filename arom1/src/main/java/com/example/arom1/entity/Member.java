@@ -1,5 +1,6 @@
 package com.example.arom1.entity;
 
+import com.example.arom1.dto.MemberDto;
 import com.example.arom1.dto.MyPageDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -108,5 +110,15 @@ public class Member extends BaseEntity implements UserDetails {
         this.introduction = dto.getIntroduction();
         this.age = dto.getAge();
         this.nickname = dto.getNickname();
+    }
+
+    public static Member createMember(MemberDto dto, PasswordEncoder passwordEncoder) {
+        Member member = Member.builder()
+                .email(dto.getEmail())
+                .password(passwordEncoder.encode(dto.getPassword()))  //암호화처리
+                .name(dto.getName())
+                .introduction(dto.getIntroduction())
+                .build();
+        return member;
     }
 }
