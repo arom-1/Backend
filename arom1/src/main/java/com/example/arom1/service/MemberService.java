@@ -11,35 +11,24 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
-public class MemberService implements UserDetailsService {
+public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    public Member saveMember(Member member) {
+        validateDuplicateMember(member);
+
+        return memberRepository.save(member);
     }
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    public Long save(MemberDto dto) {
-
-        PasswordEncoder pw = null;
-
-        return memberRepository.save(Member.builder()
-                .email(dto.getEmail())
-                .password(passwordEncoder.encode(dto.getPassword()))
-                .name(dto.getName())
-                .introduction(dto.getIntroduction())
-                .build()).getId();
-    }
-
-    @Override
-    public Member loadUserByUsername(String email) {
-        return memberRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException((email)));
+    private void validateDuplicateMember(Member member) {
+        Optional<Member> findMember = memberRepository.findByEmail(member.getEmail());
+        if (findMember != null) {
+            throw new IllegalStateException("이미 가입된 회원입니다.");
+        }
     }
 }
