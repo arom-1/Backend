@@ -1,6 +1,7 @@
 package com.example.arom1.entity;
 
 import com.example.arom1.dto.request.SeoulEateryDto;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -45,10 +46,6 @@ public class Eatery extends BaseEntity{
     @Column(name = "rating", nullable = true)
     private double rating;
 
-    private String x;
-
-    private String y;
-
 //    @Column(name = "information", nullable = false)
 //    private String information;
 //
@@ -68,8 +65,13 @@ public class Eatery extends BaseEntity{
     @OneToMany(mappedBy = "eatery")
     private List<ChatRoom> chatRooms = new ArrayList<>(); //양방향
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonBackReference
+    @JoinColumn(name = "eatery_location_idx")
+    private EateryLocation eateryLocation;
+
     @Builder
-    public Eatery(String name, String siteWhlAddr, String rdnWhlAdd, String rdnPostNo, String updateDt, String uptaeNm, String telephone, String x, String y) {
+    public Eatery(String name, String siteWhlAddr, String rdnWhlAdd, String rdnPostNo, String updateDt, String uptaeNm, String telephone, EateryLocation eateryLocation) {
         this.name = name;
         this.siteWhlAddr = siteWhlAddr;
         this.rdnWhlAdd = rdnWhlAdd;
@@ -77,8 +79,7 @@ public class Eatery extends BaseEntity{
         this.updateDt = updateDt;
         this.uptaeNm = uptaeNm;
         this.telephone = telephone;
-        this.x = x;
-        this.y = y;
+        this.eateryLocation = eateryLocation;
     }
 
     public static Eatery dtoToEntity(SeoulEateryDto dto){
@@ -90,8 +91,7 @@ public class Eatery extends BaseEntity{
                 .updateDt(dto.getUpdateDt())
                 .uptaeNm(dto.getUptaeNm())
                 .telephone(dto.getTelephone())
-                .x(dto.getX())
-                .y(dto.getY())
+                .eateryLocation(new EateryLocation(Double.parseDouble(dto.getY()), Double.parseDouble(dto.getX())))
                 .build();
     }
 }

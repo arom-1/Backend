@@ -1,6 +1,4 @@
-
 package com.example.arom1.entity;
-
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
@@ -13,33 +11,29 @@ import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
 
-
-
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "location")
-public class Location extends BaseEntity {
+@Table(name = "eatery_location")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class EateryLocation {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @JsonBackReference
-    @Column(name = "location", columnDefinition = "POINT SRID 4326")
+    @Column(name = "eatery_location", columnDefinition = "POINT SRID 4326")
     private Point point;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Member member;
+    @OneToOne(mappedBy = "eateryLocation")
+    private Eatery eatery;
 
     @Builder
-    public Location(Double latitude, Double longitude)  {
-        this.point = newLocation(latitude, longitude);
+    public EateryLocation(Double longitude, Double latitude)  {
+        this.point = newEateryLocation(latitude, longitude);
     }
-    public static Point newLocation(Double latitude, Double longitude) {
+    public static Point newEateryLocation(Double longitude, Double latitude) {
         GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326);
         return geometryFactory.createPoint(new Coordinate(longitude, latitude));
     }
-
-
-
 }

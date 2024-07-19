@@ -3,7 +3,6 @@ package com.example.arom1.controller;
 
 import com.example.arom1.common.exception.BaseException;
 import com.example.arom1.common.response.BaseResponse;
-import com.example.arom1.dto.request.EaterySearchLocation;
 import com.example.arom1.dto.request.SeoulEateryDto;
 import com.example.arom1.dto.response.EateryResponse;
 import com.example.arom1.service.EateryService;
@@ -56,8 +55,8 @@ public class EateryController {
         }
     }
 
-    @GetMapping("/eatery/search/category")
-    public BaseResponse<List<EateryResponse>> searchEateryByCategory(@RequestParam String category){
+    @GetMapping("/eatery/search/category/{category}")
+    public BaseResponse<List<EateryResponse>> searchEateryByCategory(@PathVariable String category){
         try{
             List<EateryResponse> eateryResponseList = eateryService.searchEateryWithCategory(category);
             return new BaseResponse<>(eateryResponseList);
@@ -66,11 +65,12 @@ public class EateryController {
         }
     }
 
-    //유저의 현재위치를 기반으로 주변 식당 제공
+    //    유저의 현재위치를 기반으로 주변 식당 제공
     @GetMapping("/eatery/search/address")
-    public BaseResponse<List<EateryResponse>> searchEateryByAddress(@RequestBody EaterySearchLocation location){
+    public BaseResponse<List<EateryResponse>> searchEateryByAddress(@RequestParam Double longitude,
+                                                                    @RequestParam Double latitude){
         try{
-            List<EateryResponse> eateryResponseList = eateryService.searchEateryWithLocation(location);
+            List<EateryResponse> eateryResponseList = eateryService.searchEateryWithLocation(longitude, latitude);
             return new BaseResponse<>(eateryResponseList);
         }catch (BaseException e) {
             return new BaseResponse<>(e.getStatus());
