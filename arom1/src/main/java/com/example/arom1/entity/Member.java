@@ -32,6 +32,10 @@ public class Member extends BaseEntity {
 
     private String nickname;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JsonBackReference
+    @JoinColumn(name = "member_location_id")
+    private Location location;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;

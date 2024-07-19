@@ -11,16 +11,15 @@ public enum BaseResponseStatus {
      * 코드의 원활한 이해을 위해 code는 숫자가 아닌 아래 형태로 입력해주세요.
      */
     SUCCESS(true, HttpStatus.OK.value(), "요청에 성공하였습니다."),
+    NO_EATERY_BY_KEYWORD(true, HttpStatus.NO_CONTENT.value(), "검색어로 된 음식점이 없습니다."),
+    NO_EATERY_BY_ADDRESS(true, HttpStatus.NO_CONTENT.value(), "주변에 음식점이 없습니다."),
+    NO_EATERY_BY_CATEGORY(true, HttpStatus.NO_CONTENT.value(), "주변에 음식점이 없습니다."),
 
     // 4xx : client error
     EXIST_EMAIL(false, HttpStatus.CONFLICT.value(), "이미 존재하는 회원입니다."),
-    FAIL_LOGIN(false, HttpStatus.NO_CONTENT.value(), "로그인에 실패했습니다."),
-    NON_EXIST_USER(false, HttpStatus.NO_CONTENT.value(), "존재하지 않는 회원입니다."),
-    PASSWORD_ERROR(false, HttpStatus.NO_CONTENT.value(), "비밀번호가 틀렸습니다."),
-    HTTP_METHOD_ERROR(false, HttpStatus.FORBIDDEN.value(), "http 메서드가 올바르지 않습니다."),
-    NO_EATERY_BY_KEYWORD(false, HttpStatus.NO_CONTENT.value(), "검색어로 된 음식점이 없습니다."),
-    NO_EATERY_BY_ADDRESS(false, HttpStatus.NO_CONTENT.value(), "주변에 음식점이 없습니다."),
-
+    FAIL_LOGIN(false, HttpStatus.BAD_REQUEST.value(), "로그인에 실패했습니다."),
+    NON_EXIST_USER(false, HttpStatus.NOT_FOUND.value(), "존재하지 않는 회원입니다."),
+    PASSWORD_ERROR(false, HttpStatus.BAD_REQUEST.value(), "비밀번호가 틀렸습니다."),
     // 5xx : server error
     DATABASE_INSERT_ERROR(false, HttpStatus.INTERNAL_SERVER_ERROR.value(), "데이터베이스 입력에 실패했습니다.");
 

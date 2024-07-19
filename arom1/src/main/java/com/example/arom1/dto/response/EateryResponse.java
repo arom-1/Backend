@@ -1,10 +1,12 @@
 package com.example.arom1.dto.response;
 
+import com.example.arom1.common.DistanceCalculator;
 import com.example.arom1.entity.Eatery;
-import jakarta.persistence.Column;
+import com.example.arom1.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.locationtech.jts.geom.Point;
 
 @Getter
 @Setter
@@ -23,8 +25,10 @@ public class EateryResponse {
 
     private double rating;
 
+    private double distance;
+
     @Builder
-    private EateryResponse(String name, String siteWhlAddr, String rdnWhlAdd, String rdnPostNo, String uptaeNm, String telephone, double rating) {
+    private EateryResponse(String name, String siteWhlAddr, String rdnWhlAdd, String rdnPostNo, String uptaeNm, String telephone, double rating, double distance) {
         this.name = name;
         this.siteWhlAddr = siteWhlAddr;
         this.rdnWhlAdd = rdnWhlAdd;
@@ -32,9 +36,11 @@ public class EateryResponse {
         this.uptaeNm = uptaeNm;
         this.telephone = telephone;
         this.rating = rating;
+        this.distance = distance;
     }
 
-    public static EateryResponse entityToDto(Eatery eatery){
+    public static EateryResponse entityToDto(Eatery eatery, Point member){
+        double distance = DistanceCalculator.calculateDistance(eatery.getEateryLocation().getPoint(), member);
         return EateryResponse.builder()
                 .name(eatery.getName())
                 .siteWhlAddr(eatery.getSiteWhlAddr())
@@ -43,6 +49,7 @@ public class EateryResponse {
                 .uptaeNm(eatery.getUptaeNm())
                 .telephone(eatery.getTelephone())
                 .rating(eatery.getRating())
+                .distance(distance)
                 .build();
     }
 
