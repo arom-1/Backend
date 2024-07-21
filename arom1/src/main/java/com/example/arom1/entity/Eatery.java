@@ -48,7 +48,7 @@ public class Eatery extends BaseEntity{
     @OneToMany(mappedBy = "eatery")
     private List<Review> reviews = new ArrayList<>(); //양방향
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "eatery")
     private List<Board> boards = new ArrayList<>();
 
     @OneToMany(mappedBy = "eatery")
