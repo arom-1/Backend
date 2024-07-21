@@ -49,7 +49,7 @@ public class Eatery extends BaseEntity{
     private List<Review> reviews = new ArrayList<>(); //양방향
 
     @OneToMany(mappedBy = "eatery")
-    private List<Board> boards = new ArrayList<>();
+    private List<Meeting> boards = new ArrayList<>();
 
     @OneToMany(mappedBy = "eatery")
     private List<EateryCategory> eateryCategories = new ArrayList<>(); //양방향

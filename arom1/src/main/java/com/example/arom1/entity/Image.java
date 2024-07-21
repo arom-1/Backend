@@ -21,8 +21,9 @@ public class Image extends BaseEntity {
     private Member member;
 
     @Builder
-    private Image(String url) {
+    private Image(String url, Member member) {
         this.url = url;
+        this.member = member;
     }
 
     public static Image newImage(String url){

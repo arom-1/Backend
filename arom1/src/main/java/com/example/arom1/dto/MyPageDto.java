@@ -19,7 +19,7 @@ public class MyPageDto {
         this.introduction = introduction;
     }
 
-    public static MyPageDto newMyPageDto(Member member) {
+    public static MyPageDto toMyPageDto(Member member) {
         return MyPageDto.builder()
                 .age(member.getAge())
                 .introduction(member.getIntroduction())
