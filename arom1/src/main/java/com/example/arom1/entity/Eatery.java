@@ -42,22 +42,14 @@ public class Eatery extends BaseEntity{
     @Column(name = "telephone", nullable = false)
     private String telephone;
 
-
     @Column(name = "rating", nullable = true)
     private double rating;
 
-//    @Column(name = "information", nullable = false)
-//    private String information;
-//
-//
-//    @Column(name = "opening_hours", nullable = false)
-//    private LocalDateTime openingHours;
-//
-//    @Column(name = "closing_hours", nullable = false)
-//    private LocalDateTime closingHours;
-
     @OneToMany(mappedBy = "eatery")
     private List<Review> reviews = new ArrayList<>(); //양방향
+
+    @OneToMany(mappedBy = "board")
+    private List<Board> boards = new ArrayList<>();
 
     @OneToMany(mappedBy = "eatery")
     private List<EateryCategory> eateryCategories = new ArrayList<>(); //양방향
