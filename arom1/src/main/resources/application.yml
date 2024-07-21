@@ -26,3 +26,7 @@ spring:
     properties:
       hibernate:
     database-platform: org.hibernate.spatial.dialect.mysql.MySQL5InnoDBSpatialDialect
+
+jwt:
+  issuer: tmdgh784@naver.com
+  secret_key: arom-backend
