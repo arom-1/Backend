@@ -30,3 +30,16 @@ spring:
 jwt:
   issuer: tmdgh784@naver.com
   secret_key: arom-backend
+
+cloud:
+  aws:
+    credentials:
+      accessKey: sss
+      secretKey: sss
+    region:
+      static: ap-northeast-2
+      auto: false
+    s3:
+      bucket: discipline24test1
+    stack:
+      auto: false

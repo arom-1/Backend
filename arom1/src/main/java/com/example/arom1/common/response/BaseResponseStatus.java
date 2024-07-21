@@ -21,6 +21,7 @@ public enum BaseResponseStatus {
     HTTP_METHOD_ERROR(false, HttpStatus.FORBIDDEN.value(), "http 메서드가 올바르지 않습니다."),
     NO_EATERY_BY_KEYWORD(false, HttpStatus.NO_CONTENT.value(), "검색어로 된 음식점이 없습니다."),
     NO_EATERY_BY_ADDRESS(false, HttpStatus.NO_CONTENT.value(), "주변에 음식점이 없습니다."),
+    NO_IMAGE_BY_URL(false, HttpStatus.NO_CONTENT.value(), "해당 URL 이미지가 없습니다."),
 
     FAIL_REVIEW_POST(false, HttpStatus.INTERNAL_SERVER_ERROR.value(), "리뷰 작성에 실패했습니다."),
     INVALID_MEMBER(false, HttpStatus.NOT_FOUND.value(), "유효하지 않은 회원입니다."),

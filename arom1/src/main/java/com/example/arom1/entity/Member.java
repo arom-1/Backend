@@ -47,10 +47,10 @@ public class Member extends BaseEntity {
     private List<ChatRoomMember> chatroomMemberList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<Board> BoardMembers = new ArrayList<>();
+    private List<Meeting> BoardMembers = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<Board> BoardReplyMembers = new ArrayList<>();
+    private List<Meeting> BoardReplyMembers = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
     private List<Image> images = new ArrayList<>();
@@ -80,6 +80,13 @@ public class Member extends BaseEntity {
         this.age = dto.getAge();
         this.nickname = dto.getNickname();
     }
+    public void uploadImage(Image image) {
+        images.add(image);
+    }
+    public void removeImage(Image image) {
+        images.remove(image);
+    }
+
 
     public static Member createMember(MemberDto dto, PasswordEncoder passwordEncoder) {
         Member member = Member.builder()
