@@ -34,8 +34,8 @@ jwt:
 cloud:
   aws:
     credentials:
-      accessKey: AKIA5FTZDVNMNEAZPGCU
-      secretKey: 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
+      accessKey: sss
+      secretKey: sss
     region:
       static: ap-northeast-2
       auto: false
