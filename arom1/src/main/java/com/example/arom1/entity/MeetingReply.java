@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "board_reply")
-public class BoardReply extends BaseEntity {
+@Table(name = "meeting_reply")
+public class MeetingReply extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,15 +20,15 @@ public class BoardReply extends BaseEntity {
     private String writer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
-    private Board board;
+    @JoinColumn(name = "meeting_id")
+    private Meeting meeting;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
     @Builder
-    private BoardReply(String replyContent, String writer) {
+    private MeetingReply(String replyContent, String writer) {
         this.replyContent = replyContent;
         this.writer = writer;
     }
