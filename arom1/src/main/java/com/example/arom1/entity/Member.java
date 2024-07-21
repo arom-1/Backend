@@ -55,15 +55,14 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member")
     private List<Image> images = new ArrayList<>();
 
-//    @OneToOne(cascade = CascadeType.PERSIST)
-//    @JsonBackReference
-//    @JoinColumn(name = "member_location_id")
-//    private Location location;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonBackReference
+    @JoinColumn(name = "member_location_id")
+    private Location location;
 
     public enum Gender {
         MALE, FEMALE
     }
-
 
     @Builder
     private Member(String email, String password, String name, String introduction, Gender gender, int age, String nickname) {
