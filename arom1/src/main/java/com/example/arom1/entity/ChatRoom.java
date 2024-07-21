@@ -34,4 +34,18 @@ public class ChatRoom extends BaseEntity {
     @JoinColumn(name = "eatery_id")
     private Eatery eatery;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "meeting_id")
+    private Meeting meeting;
+
+    @Builder
+    public ChatRoom(Long id, String chatRoomName, int totalMembers, int participants, Meeting meeting) {
+        this.id = id;
+        this.chatRoomName = chatRoomName;
+        this.totalMembers = totalMembers;
+        this.participants = participants;
+        this.meeting=  meeting;
+    }
+
+
 }
