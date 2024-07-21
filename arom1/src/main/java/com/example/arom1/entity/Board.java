@@ -26,6 +26,10 @@ public class Board extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "eatery_id")
+    private Eatery eatery;
+
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
     private List<BoardReply> replies = new ArrayList<>();
 
